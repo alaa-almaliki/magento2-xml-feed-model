@@ -25,6 +25,11 @@ abstract class MagentoSubject extends Subject
     protected $json;
 
     /**
+     * @return string
+     */
+    abstract protected function getMappedAttributesPath();
+
+    /**
      * MagentoSubject constructor.
      * @param CallbackStorage $storage
      * @param ScopeConfigInterface $scopeConfig
@@ -51,7 +56,7 @@ abstract class MagentoSubject extends Subject
             return [];
         }
 
-        $attributes = $this->json->unserialize($this->scopeConfig->getValue($this->getMappedAttributesPath()));
+        $attributes = $this->unserializeAttributes();
         $mappedAttributes = [];
         foreach ($attributes as $attribute) {
             $mappedAttributes[$attribute['custom_attribute']] = $attribute['magento_attribute'];
@@ -60,7 +65,17 @@ abstract class MagentoSubject extends Subject
     }
 
     /**
-     * @return string
+     * @return array|bool|float|int|mixed|null|string
      */
-    abstract protected function getMappedAttributesPath();
+    private function unserializeAttributes()
+    {
+        $attributes = [];
+        try {
+            $attributes = $this->json->unserialize($this->scopeConfig->getValue($this->getMappedAttributesPath()));
+        } catch (\Exception $e) {
+            $attributes = unserialize($this->scopeConfig->getValue($this->getMappedAttributesPath()));
+        }
+
+        return $attributes;
+    }
 }
