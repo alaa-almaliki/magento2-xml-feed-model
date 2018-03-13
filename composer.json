@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "alaa-almaliki/xml-data-mapper": "dev-master"
+    "alaa-almaliki/xml-data-mapper": "^0.0.1"
   },
   "autoload": {
     "files": [
