@@ -3,16 +3,13 @@
   "description": "Magento2 Xml Feed Model",
   "type": "magento2-module",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "authors": [
     {
       "name": "Alaa Al-Maliki",
       "email": "alaa.almaliki@gmail.com"
     }
   ],
-  "require": {
-    "alaa-almaliki/xml-data-mapper": "^0.0.1"
-  },
   "autoload": {
     "files": [
       "registration.php"
