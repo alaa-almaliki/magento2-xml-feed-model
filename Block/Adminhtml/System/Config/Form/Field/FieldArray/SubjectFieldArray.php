@@ -1,18 +1,26 @@
 <?php
 
+/**
+ * (c) Alaa Al-Maliki
+ *
+ * @author Alaa Al-Maliki <alaa.almaliki@gmail.com>
+ */
+
+declare(strict_types=1);
+
 namespace Alaa\XmlFeedModel\Block\Adminhtml\System\Config\Form\Field\FieldArray;
 
 use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
 
 /**
  * Class SubjectFieldArray
+ *
  * @package Alaa\XmlFeedModel\Block\Adminhtml\System\Config\Form\Field\FieldArray
- * @author Alaa Al-Maliki <alaa.almaliki@gmail.com>
  */
 class SubjectFieldArray extends AbstractFieldArray
 {
     /**
-     * Prepare fields
+     * Subject Field Array
      */
     protected function _prepareToRender()
     {
