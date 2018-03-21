@@ -20,6 +20,11 @@ class Subject
     /**
      * @var array
      */
+    protected $initData = [];
+
+    /**
+     * @var array
+     */
     protected $data = [];
 
     /**
@@ -105,6 +110,7 @@ class Subject
     public function addCallback(string $attributeCode, callable $fn): self
     {
         $this->callbackStorage->registerCallback($attributeCode, $fn);
+        $this->mappedAttributes->mapAttribute($attributeCode, $attributeCode);
         return $this;
     }
 
@@ -140,15 +146,7 @@ class Subject
      */
     public function setData(array $data): self
     {
-        foreach ($this->mappedAttributes->getMappedAttributes() as $xmlAttribute => $magentoAttribute) {
-            if (\array_key_exists($magentoAttribute, $data)) {
-                $callback = $this->getCallback($magentoAttribute, $xmlAttribute);
-                $value = Attribute::create($xmlAttribute, $magentoAttribute, $data[$magentoAttribute], $callback)
-                    ->value();
-                $this->data[$xmlAttribute] = $value;
-            }
-        }
-
+        $this->initData = $data;
         return $this;
     }
 
@@ -157,6 +155,13 @@ class Subject
      */
     public function getData(): array
     {
+        foreach ($this->mappedAttributes->getMappedAttributes() as $xmlAttribute => $magentoAttribute) {
+            $callback = $this->getCallback($magentoAttribute, $xmlAttribute);
+            $value = Attribute::create($xmlAttribute, $magentoAttribute, $this->initData, $callback)
+                ->value();
+            $this->data[$xmlAttribute] = $value;
+        }
+
         if ($this->hasSubjects()) {
             $this->recursiveData($this->subjects);
         }

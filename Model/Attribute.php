@@ -49,14 +49,20 @@ final class Attribute
     /**
      * @param string           $xmlAttribute
      * @param string           $magentoAttribute
-     * @param String|int|float $value
+     * @param array            $data
      * @param callable|null    $fn
      * @return Attribute
      */
-    static public function create(string $xmlAttribute, string $magentoAttribute, $value, callable $fn = null): self
+    static public function create(string $xmlAttribute, string $magentoAttribute, array $data, callable $fn = null): self
     {
+        $value = '';
+
+        if (array_key_exists($magentoAttribute, $data)) {
+            $value = $data[$magentoAttribute];
+        }
+
         if (null !== $fn && is_callable($fn)) {
-            $value = $fn($value);
+            $value = $fn($data);
         }
 
         return new self($xmlAttribute, $magentoAttribute, $value);

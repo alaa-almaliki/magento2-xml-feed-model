@@ -43,7 +43,14 @@ interface MappedAttributesInterface
      * @param array $mappedAttributes
      * @return MappedAttributesInterface
      */
-    public function setMappedAttributes(array $mappedAttributes): MappedAttributesInterface ;
+    public function setMappedAttributes(array $mappedAttributes): MappedAttributesInterface;
+
+    /**
+     * @param string $xmlAttribute
+     * @param string $magentoAttribute
+     * @return MappedAttributesInterface
+     */
+    public function mapAttribute(string $xmlAttribute, string $magentoAttribute): MappedAttributesInterface;
 
     /**
      * @return string

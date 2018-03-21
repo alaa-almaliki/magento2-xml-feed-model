@@ -61,16 +61,14 @@ class MappedAttributes implements MappedAttributesInterface
         $scopeType = ScopeConfigInterface::SCOPE_TYPE_DEFAULT,
         $scopeCode = null
     ): array {
-        if (empty($this->mappedAttributes)) {
-            if (!$this->getMappedAttributesConfigPath()) {
-                $mappedAttributes = [];
-            } else {
-                $value = $this->scopeConfig->getValue($this->getMappedAttributesConfigPath(), $scopeType, $scopeCode);
-                $mappedAttributes = $this->serializer->unserialize($value);
-            }
-            $this->mappedAttributes = $this->normalize($mappedAttributes);
+        if (!$this->getMappedAttributesConfigPath()) {
+            $mappedAttributes = [];
+        } else {
+            $value = $this->scopeConfig->getValue($this->getMappedAttributesConfigPath(), $scopeType, $scopeCode);
+            $mappedAttributes = $this->serializer->unserialize($value);
         }
 
+        $this->mappedAttributes = \array_merge($this->normalize($mappedAttributes), $this->mappedAttributes);
         return $this->mappedAttributes;
     }
 
@@ -81,6 +79,22 @@ class MappedAttributes implements MappedAttributesInterface
     public function setMappedAttributes(array $mappedAttributes): MappedAttributesInterface
     {
         $this->mappedAttributes = $mappedAttributes;
+        return $this;
+    }
+
+    /**
+     * @param string $xmlAttribute
+     * @param string $magentoAttribute
+     * @return MappedAttributesInterface
+     * @throws \Exception
+     */
+    public function mapAttribute(string $xmlAttribute, string $magentoAttribute): MappedAttributesInterface
+    {
+        if (array_key_exists($xmlAttribute, $this->mappedAttributes)) {
+            throw new \Exception(sprintf('Attribute %s is already exist', $xmlAttribute));
+        }
+
+        $this->mappedAttributes[$xmlAttribute] = $magentoAttribute;
         return $this;
     }
 

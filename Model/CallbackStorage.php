@@ -81,7 +81,7 @@ class CallbackStorage
     public function registerCallback(string $key, callable $fn): self
     {
         if (!\is_callable($fn)) {
-            throw new \Exception(\sprintf('Parameter 1 expected to be callable, %s given', \gettype($fn)));
+            throw new \Exception(\sprintf('Argument #2 expected to be callable, %s given', \gettype($fn)));
         }
 
         $this->callbacks[$key] = $fn;
