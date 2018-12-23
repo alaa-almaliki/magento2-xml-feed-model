@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-   <preference for="Alaa\XmlFeedModel\Model\DataProviderInterface" type="Alaa\XmlFeedModel\Model\AbstractDataProvider" />
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Alaa\XmlFeedModel\Subject\TransformerInterface" type="Alaa\XmlFeedModel\Subject\Transformer" />
+    <preference for="Alaa\XmlFeedModel\Model\Parser\ParserInterface" type="Alaa\XmlFeedModel\Model\Parser\PhpArrayParser" />
+    <preference for="Alaa\XmlFeedModel\Model\MappedKeysInterface" type="Alaa\XmlFeedModel\Model\MappedKeys" />
 </config>
